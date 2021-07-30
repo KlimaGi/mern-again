@@ -8,8 +8,11 @@ const articleSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      trim: true,
-      minlength: 3,
+    },
+
+    count: {
+      type: Number,
+      required: true,
     },
   },
   {

@@ -9,12 +9,13 @@ router.route("/").get((req, res) => {
 
 router.route("/add").post((req, res) => {
   const article = req.body.article;
+  const count = req.body.count;
 
-  const newArticle = new Article({ article });
+  const newArticle = new Article({ article, count });
 
   newArticle
     .save()
-    .then(() => res.json("Exercise added!"))
+    .then(() => res.json("Article added!"))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
@@ -34,6 +35,7 @@ router.route("/update/:id").post((req, res) => {
   Article.findById(req.params.id)
     .then((article) => {
       article.article = req.body.article;
+      article.count = Number(req.body.count);
 
       article
         .save()
