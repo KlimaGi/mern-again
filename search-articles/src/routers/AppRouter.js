@@ -14,19 +14,19 @@ class AppRouter extends React.Component {
     super(props);
     this.state = {
       searchword: "",
-      language: "",
-      from: "",
-      to: "",
       articlesFromGNews: [],
       searchWordsFromDB: [],
+      articleTitlesFromMongo: [],
     };
+
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
     // get articles from gNews, 24h old
     const time = moment().subtract(2, "days").toISOString().split(".")[0] + "Z";
     fetch(
-      `https://gnews.io/api/v4/search?q=news&in=content&lang=en&from=${time}&max=9&token=9f76b7fad62719cde83c324e1de64e63`
+      `https://gnews.io/api/v4/search?q=news&in=content&lang=en&from=${time}&max=9&token=8dbeb974cde3adbf5fbdb91d32ed9f61`
     )
       .then(function (response) {
         return response.json();
@@ -46,10 +46,21 @@ class AppRouter extends React.Component {
       .catch((err) => {
         console.log(err);
       });
+
+    // get titles from mongoDB
+    axios.get("http://localhost:5000/articles").then((response) => {
+      if (response.data.length > 0) {
+        const arrTitles = [];
+        response.data.map((object) => arrTitles.push(object.title));
+        this.setState({ articleTitlesFromMongo: arrTitles });
+      }
+    });
   }
 
   handleSearch(searchword, language, from, to) {
-    this.setState({ searchword, language, from, to });
+    this.setState({
+      searchword: searchword,
+    });
 
     // send search word to mongoDB
     const word = {
@@ -60,20 +71,20 @@ class AppRouter extends React.Component {
       .then((response) => console.log(response.data));
 
     // get gNews articles by searchword
-    const searchGN = this.state.searchword || "news";
-    const langGN = this.state.language || "en";
-    const fromGN = this.state.from;
-    const toGN = this.state.to;
+
+    let wordForSearching = searchword === "" ? "dog" : searchword;
 
     fetch(
-      `https://gnews.io/api/v4/search?q=${searchGN}&in=content&lang=${langGN}&from=${fromGN}&to=${toGN}&max=9&token=9f76b7fad62719cde83c324e1de64e63`
+      `https://gnews.io/api/v4/search?q=${wordForSearching}&in=content&lang=${language}&from=${from}&to=${to}&max=9&token=8dbeb974cde3adbf5fbdb91d32ed9f61`
     )
       .then(function (response) {
         return response.json();
       })
       .then((data) => {
         this.setState({ articlesFromGNews: data.articles });
+        console.log(this.state.articlesFromGNews);
       });
+    console.log(this.state.articlesFromGNews);
   }
 
   render() {
@@ -81,6 +92,7 @@ class AppRouter extends React.Component {
       handleSearch: this.handleSearch,
       articlesFromGNews: this.state.articlesFromGNews,
       searchWordsFromDB: this.state.searchWordsFromDB,
+      articleTitlesFromMongo: this.state.articleTitlesFromMongo,
     };
 
     return (

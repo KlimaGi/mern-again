@@ -6,6 +6,7 @@ import Search from "./Search";
 import Language from "./Language";
 import Time from "./Time";
 import { SearchContext } from "../context/searchContext";
+import moment from "moment";
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -13,9 +14,9 @@ export default class Header extends React.Component {
 
     this.state = {
       searchword: "",
-      language: "",
-      from: "",
-      to: "",
+      language: "en",
+      from: moment().subtract(2, "days")._d.toISOString().split(".")[0] + "Z",
+      to: moment()._d.toISOString().split(".")[0] + "Z",
     };
   }
 
