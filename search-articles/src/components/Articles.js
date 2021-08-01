@@ -1,8 +1,8 @@
 import React from "react";
+import { SearchContext } from "../context/searchContext";
 import Article from "./Article";
 // import Spinner from "./Spinner";
 import ErrorMessage from "./ErrorMessage";
-import { SearchContext } from "../context/searchContext";
 
 export default class Articles extends React.Component {
   constructor(props) {
@@ -19,9 +19,9 @@ export default class Articles extends React.Component {
     return list.includes(title) ? true : false;
   }
 
-  articleList = (prop, list) => {
-    if (prop.length > 0) {
-      return prop.map((details, index) => {
+  articleList = (articles, list) => {
+    if (articles.length > 0) {
+      return articles.map((details, index) => {
         return (
           <Article
             title={details.title}

@@ -37,11 +37,15 @@ class AppRouter extends React.Component {
 
     // get from mongoDB searchwords arr
     axios
-      .get("http://localhost:5000/searchwords")
+      .get("http://localhost:5000/words")
       .then((response) => {
         const tempArr = [];
-        response.data.map((object) => tempArr.push(object.searchword));
+        response.data.map((object) => tempArr.push(object.word));
         this.setState({ searchWordsFromDB: tempArr });
+        console.log(
+          "approuter-searchWordsFromDB",
+          this.state.searchWordsFromDB
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -51,8 +55,12 @@ class AppRouter extends React.Component {
     axios.get("http://localhost:5000/articles").then((response) => {
       if (response.data.length > 0) {
         const arrTitles = [];
-        response.data.map((object) => arrTitles.push(object.title));
+        response.data.map((object) => arrTitles.push(object.article));
         this.setState({ articleTitlesFromMongo: arrTitles });
+        console.log(
+          "approuter-articleTitlesFromMongo",
+          this.state.articleTitlesFromMongo
+        );
       }
     });
   }
@@ -61,18 +69,28 @@ class AppRouter extends React.Component {
     this.setState({
       searchword: searchword,
     });
+    console.log("searchword from handleSearch", searchword);
 
     // send search word to mongoDB
     const word = {
-      searchword: this.state.searchword,
+      word: searchword,
+      count: 1,
     };
     axios
-      .post("http://localhost:5000/searchwords/add", word)
-      .then((response) => console.log(response.data));
+      .post("http://localhost:5000/words/add", word)
+      .then((response) => console.log("response.data", response.data));
+
+    // add word to front
+    let temparr = this.state.searchWordsFromDB;
+    temparr.push(searchword);
+    this.setState({
+      searchWordsFromDB: temparr,
+    });
+    console.log("adding front", this.state.searchWordsFromDB);
 
     // get gNews articles by searchword
 
-    let wordForSearching = searchword === "" ? "dog" : searchword;
+    let wordForSearching = searchword === "" ? "news" : searchword;
 
     fetch(
       `https://gnews.io/api/v4/search?q=${wordForSearching}&in=content&lang=${language}&from=${from}&to=${to}&max=9&token=8dbeb974cde3adbf5fbdb91d32ed9f61`
@@ -90,8 +108,8 @@ class AppRouter extends React.Component {
   render() {
     const searchContextValue = {
       handleSearch: this.handleSearch,
-      articlesFromGNews: this.state.articlesFromGNews,
       searchWordsFromDB: this.state.searchWordsFromDB,
+      articlesFromGNews: this.state.articlesFromGNews,
       articleTitlesFromMongo: this.state.articleTitlesFromMongo,
     };
 

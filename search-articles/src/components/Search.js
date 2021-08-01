@@ -5,7 +5,7 @@ class Search extends React.Component {
     super(props);
     this.state = {
       filteredSearchWordsFromDB: [],
-      searchWordsFromDB: props.searchWordsFromDB,
+      searchWordsFromDB: [],
       showResultsUl: false,
       error: false,
     };
@@ -15,15 +15,17 @@ class Search extends React.Component {
     this.handleFocus = this.handleFocus.bind(this);
   }
 
-  handleFocus = () => {
+  handleFocus = (searchWordsFromDB) => {
     this.props.onSendWord("");
+    this.setState({ searchWordsFromDB });
+    console.log("searchWordsFromDB", searchWordsFromDB);
   };
 
   handleChange(event) {
     this.props.onSendWord(event.target.value);
 
     const word = event.target.value;
-
+    console.log("input-word", word);
     if (word === "") {
       this.setState({ error: false, showResultsUl: false });
     } else if (
@@ -75,7 +77,7 @@ class Search extends React.Component {
           className="form-control input-back text-color"
           value={this.props.value}
           onChange={this.handleChange}
-          onFocus={this.handleFocus}
+          onFocus={() => this.handleFocus(this.props.searchWordsFromDB)}
           placeholder="Enter search word"
         />
 
