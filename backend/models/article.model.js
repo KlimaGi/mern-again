@@ -14,6 +14,11 @@ const articleSchema = new Schema(
       type: Number,
       required: true,
     },
+    url: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
   {
     timestamps: true,

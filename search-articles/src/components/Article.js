@@ -25,9 +25,9 @@ const Article = (props) => (
           </div>
           <div
             className="bottom container-fluid rounded-0 back-color-style"
-            onClick={() => sendTitleToDB(props.title)}
+            onClick={() => sendTitleToDB(props.title, props.url)}
           >
-            <ButtonLink title={props.title} linkTo={props.url} />
+            <ButtonLink linkTo={props.url} />
           </div>
         </div>
       </div>

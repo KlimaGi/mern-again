@@ -10,8 +10,9 @@ router.route("/").get((req, res) => {
 router.route("/add").post((req, res) => {
   const article = req.body.article;
   const count = req.body.count;
+  const url = req.body.url;
 
-  const newArticle = new Article({ article, count });
+  const newArticle = new Article({ article, count, url });
 
   newArticle
     .save()

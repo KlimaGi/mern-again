@@ -17,6 +17,7 @@ class AppRouter extends React.Component {
       articlesFromGNews: [],
       searchWordsFromDB: [],
       articleTitlesFromMongo: [],
+      titlesForTable: [],
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -57,11 +58,16 @@ class AppRouter extends React.Component {
       if (response.data.length > 0) {
         const arrTitles = [];
         response.data.map((object) => arrTitles.push(object.article));
-        this.setState({ articleTitlesFromMongo: arrTitles });
-        // console.log(
-        //   "approuter-articleTitlesFromMongo",
-        //   this.state.articleTitlesFromMongo
-        // );
+        this.setState({
+          articleTitlesFromMongo: arrTitles,
+          titlesForTable: response.data,
+        });
+
+        console.log(
+          "approuter-articleTitlesFromMongo",
+          this.state.articleTitlesFromMongo
+        );
+        console.log("titlesForTable", this.state.titlesForTable);
       }
     });
   }
@@ -107,7 +113,7 @@ class AppRouter extends React.Component {
   }
 
   // send title to mongoDB
-  sendTitleToDB(title) {
+  sendTitleToDB(title, url) {
     //front title arr
     let tempTitlearr = this.state.articleTitlesFromMongo;
     tempTitlearr.push(title);
@@ -118,6 +124,7 @@ class AppRouter extends React.Component {
     const articleTitle = {
       article: title,
       count: 1,
+      url: url,
     };
 
     // send title to mongoDB
@@ -135,6 +142,7 @@ class AppRouter extends React.Component {
       articlesFromGNews: this.state.articlesFromGNews,
       articleTitlesFromMongo: this.state.articleTitlesFromMongo,
       sendTitleToDB: this.sendTitleToDB,
+      titlesForTable: this.state.titlesForTable,
     };
 
     return (
