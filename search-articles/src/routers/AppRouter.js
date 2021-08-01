@@ -20,13 +20,14 @@ class AppRouter extends React.Component {
     };
 
     this.handleSearch = this.handleSearch.bind(this);
+    this.sendTitleToDB = this.sendTitleToDB.bind(this);
   }
 
   componentDidMount() {
     // get articles from gNews, 24h old
     const time = moment().subtract(2, "days").toISOString().split(".")[0] + "Z";
     fetch(
-      `https://gnews.io/api/v4/search?q=news&in=content&lang=en&from=${time}&max=9&token=8dbeb974cde3adbf5fbdb91d32ed9f61`
+      `https://gnews.io/api/v4/search?q=news&in=content&lang=en&from=${time}&max=9&token=ad067a361343c4bbf32705a9be330165`
     )
       .then(function (response) {
         return response.json();
@@ -42,10 +43,10 @@ class AppRouter extends React.Component {
         const tempArr = [];
         response.data.map((object) => tempArr.push(object.word));
         this.setState({ searchWordsFromDB: tempArr });
-        console.log(
-          "approuter-searchWordsFromDB",
-          this.state.searchWordsFromDB
-        );
+        // console.log(
+        //   "approuter-searchWordsFromDB",
+        //   this.state.searchWordsFromDB
+        // );
       })
       .catch((err) => {
         console.log(err);
@@ -57,10 +58,10 @@ class AppRouter extends React.Component {
         const arrTitles = [];
         response.data.map((object) => arrTitles.push(object.article));
         this.setState({ articleTitlesFromMongo: arrTitles });
-        console.log(
-          "approuter-articleTitlesFromMongo",
-          this.state.articleTitlesFromMongo
-        );
+        // console.log(
+        //   "approuter-articleTitlesFromMongo",
+        //   this.state.articleTitlesFromMongo
+        // );
       }
     });
   }
@@ -69,7 +70,7 @@ class AppRouter extends React.Component {
     this.setState({
       searchword: searchword,
     });
-    console.log("searchword from handleSearch", searchword);
+    //console.log("searchword from handleSearch", searchword);
 
     // send search word to mongoDB
     const word = {
@@ -86,23 +87,45 @@ class AppRouter extends React.Component {
     this.setState({
       searchWordsFromDB: temparr,
     });
-    console.log("adding front", this.state.searchWordsFromDB);
+    //console.log("adding front", this.state.searchWordsFromDB);
 
     // get gNews articles by searchword
 
     let wordForSearching = searchword === "" ? "news" : searchword;
 
     fetch(
-      `https://gnews.io/api/v4/search?q=${wordForSearching}&in=content&lang=${language}&from=${from}&to=${to}&max=9&token=8dbeb974cde3adbf5fbdb91d32ed9f61`
+      `https://gnews.io/api/v4/search?q=${wordForSearching}&in=content&lang=${language}&from=${from}&to=${to}&max=9&token=ad067a361343c4bbf32705a9be330165`
     )
       .then(function (response) {
         return response.json();
       })
       .then((data) => {
         this.setState({ articlesFromGNews: data.articles });
-        console.log(this.state.articlesFromGNews);
+        //console.log(this.state.articlesFromGNews);
       });
-    console.log(this.state.articlesFromGNews);
+    //console.log(this.state.articlesFromGNews);
+  }
+
+  // send title to mongoDB
+  sendTitleToDB(title) {
+    //front title arr
+    let tempTitlearr = this.state.articleTitlesFromMongo;
+    tempTitlearr.push(title);
+    this.setState({
+      articleTitlesFromMongo: tempTitlearr,
+    });
+
+    const articleTitle = {
+      article: title,
+      count: 1,
+    };
+
+    // send title to mongoDB
+    axios
+      .post("http://localhost:5000/articles/add", articleTitle)
+      .then((res) => console.log(res.data));
+
+    console.log(" front-title", title);
   }
 
   render() {
@@ -111,6 +134,7 @@ class AppRouter extends React.Component {
       searchWordsFromDB: this.state.searchWordsFromDB,
       articlesFromGNews: this.state.articlesFromGNews,
       articleTitlesFromMongo: this.state.articleTitlesFromMongo,
+      sendTitleToDB: this.sendTitleToDB,
     };
 
     return (
