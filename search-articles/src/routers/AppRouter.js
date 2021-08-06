@@ -5,6 +5,7 @@ import axios from "axios";
 import Header from "../components/Header";
 import Articles from "../components/Articles";
 import Titles from "../components/Titles";
+import Note from "../components/Note";
 import NotFound from "../components/NotFound";
 import { SearchContext } from "../context/searchContext";
 import moment from "moment";
@@ -170,6 +171,7 @@ class AppRouter extends React.Component {
           <Switch>
             <Route path="/" component={Articles} exact={true} />
             <Route path="/titles" component={Titles} />
+            <Route path="/note" component={Note} />
             <Route component={NotFound} />
           </Switch>
         </SearchContext.Provider>

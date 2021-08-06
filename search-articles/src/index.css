@@ -157,4 +157,13 @@ body {
   color: #864586 !important;
   border-bottom: 1px solid #864586;
 }
+
+.note-box {
+  width: 20rem;
+  height: 20rem;
+  border: 1px solid #e6e4e4 !important;
+}
+.note-box:focus {
+  border: 1px solid #e6e4e4 !important;
+}
 /*# sourceMappingURL=App.css.map */
