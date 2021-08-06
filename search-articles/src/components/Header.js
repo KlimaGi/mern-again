@@ -1,7 +1,6 @@
 import React from "react";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css";
-//import ArticlesList from "./ArticlesList";
 import Search from "./Search";
 import Language from "./Language";
 import Time from "./Time";
@@ -13,7 +12,7 @@ export default class Header extends React.Component {
     super(props);
 
     this.state = {
-      searchword: "",
+      searchWord: "",
       language: "en",
       from: moment().subtract(2, "days")._d.toISOString().split(".")[0] + "Z",
       to: moment()._d.toISOString().split(".")[0] + "Z",
@@ -29,12 +28,19 @@ export default class Header extends React.Component {
               <div className="mx-5 ">
                 <h2 className="text-white m-0">Articles from GNews</h2>
               </div>
-
+              <div className="mx-5 my-1">
+                <Link
+                  className="text-white m-0 px-2 py-1 link-style"
+                  to="/titles"
+                >
+                  Titles
+                </Link>
+              </div>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleSearch(
-                    this.state.searchword,
+                    this.state.searchWord,
                     this.state.language,
                     this.state.from,
                     this.state.to
@@ -45,9 +51,9 @@ export default class Header extends React.Component {
                   <div className="m-1 ">
                     <Search
                       onSendWord={(inputWord) =>
-                        this.setState({ searchword: inputWord })
+                        this.setState({ searchWord: inputWord })
                       }
-                      value={this.state.searchword}
+                      value={this.state.searchWord}
                       searchWordsFromDB={searchWordsFromDB}
                     />
                   </div>

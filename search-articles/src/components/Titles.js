@@ -3,8 +3,7 @@ import DataTable from "react-data-table-component";
 //import DataTableExtension from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { SearchContext } from "../context/searchContext";
-
-const ArticleLink = (row) => <a href="{row}">Read it</a>;
+import ButtonForTable from "./ButtonForTable";
 
 const columns = [
   {
@@ -20,7 +19,15 @@ const columns = [
   {
     name: "Link",
     selector: "url",
-    cell: (row) => <ArticleLink {...row} />,
+    cell: (row) => (
+      <a href={row.url} target="_blank">
+        Read it
+      </a>
+    ),
+  },
+  {
+    name: "Delete",
+    cell: (row) => <ButtonForTable id={row._id} />,
   },
 ];
 

@@ -25,7 +25,7 @@ class Search extends React.Component {
     this.props.onSendWord(event.target.value);
 
     const word = event.target.value;
-    console.log("input-word", word);
+    //console.log("input-word", word);
     if (word === "") {
       this.setState({ error: false, showResultsUl: false });
     } else if (

@@ -4,7 +4,6 @@ import axios from "axios";
 import Header from "../components/Header";
 import Articles from "../components/Articles";
 import Titles from "../components/Titles";
-import Words from "../components/Words";
 import NotFound from "../components/NotFound";
 import { SearchContext } from "../context/searchContext";
 import moment from "moment";
@@ -22,6 +21,7 @@ class AppRouter extends React.Component {
 
     this.handleSearch = this.handleSearch.bind(this);
     this.sendTitleToDB = this.sendTitleToDB.bind(this);
+    this.deleteTitle = this.deleteTitle.bind(this);
   }
 
   componentDidMount() {
@@ -135,6 +135,15 @@ class AppRouter extends React.Component {
     console.log(" front-title", title);
   }
 
+  deleteTitle(id) {
+    // delete title from mongoDB
+    axios
+      .delete(`http://localhost:5000/articles/${id}`)
+      .then((res) => console.log(res.data));
+
+    console.log(" title id ", id);
+  }
+
   render() {
     const searchContextValue = {
       handleSearch: this.handleSearch,
@@ -143,6 +152,7 @@ class AppRouter extends React.Component {
       articleTitlesFromMongo: this.state.articleTitlesFromMongo,
       sendTitleToDB: this.sendTitleToDB,
       titlesForTable: this.state.titlesForTable,
+      deleteTitle: this.deleteTitle,
     };
 
     return (
@@ -152,7 +162,6 @@ class AppRouter extends React.Component {
           <Switch>
             <Route path="/" component={Articles} exact={true} />
             <Route path="/titles" component={Titles} />
-            <Route path="/words" component={Words} />
             <Route component={NotFound} />
           </Switch>
         </SearchContext.Provider>
