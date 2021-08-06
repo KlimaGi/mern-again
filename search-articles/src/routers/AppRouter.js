@@ -142,6 +142,11 @@ class AppRouter extends React.Component {
       .then((res) => console.log(res.data));
 
     console.log(" title id ", id);
+    // delete from front
+    const arr = this.state.titlesForTable.filter((obj) => obj._id !== id);
+    this.setState({
+      titlesForTable: arr,
+    });
   }
 
   render() {
