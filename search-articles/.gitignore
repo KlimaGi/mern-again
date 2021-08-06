@@ -1,0 +1,8 @@
+# keys
+.env
+backend/.env
+
+# dependencies
+/node_modules
+
+.eslintcache

@@ -26,7 +26,11 @@ export default class Header extends React.Component {
           <div className="container-fluid g-0 bg-secondary">
             <div className="d-flex align-items-end flex-wrap justify-content-start  back-color-style px-5 bt-3 pb-4">
               <div className="mx-5 ">
-                <h2 className="text-white m-0">Articles from GNews</h2>
+                <h2 className=" m-0">
+                  <Link className="link-logo-name text-white" to="/">
+                    Articles from GNews
+                  </Link>
+                </h2>
               </div>
               <div className="mx-5 my-1">
                 <Link

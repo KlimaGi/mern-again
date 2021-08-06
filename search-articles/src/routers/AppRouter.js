@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import axios from "axios";
@@ -7,6 +8,7 @@ import Titles from "../components/Titles";
 import NotFound from "../components/NotFound";
 import { SearchContext } from "../context/searchContext";
 import moment from "moment";
+require("dotenv").config();
 
 class AppRouter extends React.Component {
   constructor(props) {
@@ -27,8 +29,9 @@ class AppRouter extends React.Component {
   componentDidMount() {
     // get articles from gNews, 24h old
     const time = moment().subtract(2, "days").toISOString().split(".")[0] + "Z";
+    const token = process.env.REACT_APP_GN_TOKEN;
     fetch(
-      `https://gnews.io/api/v4/search?q=news&in=content&lang=en&from=${time}&max=9&token=ad067a361343c4bbf32705a9be330165`
+      `https://gnews.io/api/v4/search?q=news&in=content&lang=en&from=${time}&max=9&token=${token}`
     )
       .then(function (response) {
         return response.json();
@@ -98,9 +101,9 @@ class AppRouter extends React.Component {
     // get gNews articles by searchword
 
     let wordForSearching = searchword === "" ? "news" : searchword;
-
+    const token = process.env.REACT_APP_GN_TOKEN;
     fetch(
-      `https://gnews.io/api/v4/search?q=${wordForSearching}&in=content&lang=${language}&from=${from}&to=${to}&max=9&token=ad067a361343c4bbf32705a9be330165`
+      `https://gnews.io/api/v4/search?q=${wordForSearching}&in=content&lang=${language}&from=${from}&to=${to}&max=9&token=${token}`
     )
       .then(function (response) {
         return response.json();

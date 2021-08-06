@@ -140,13 +140,19 @@ body {
 }
 
 /* ******* link style ******** */
-
+.link-logo-name {
+  text-decoration: none;
+}
+.link-logo-name:hover {
+  color: #864586 !important;
+}
 .link-style {
   text-decoration: none;
   font-size: 1.4rem;
   border-bottom: 1px solid #fdfdfd;
   border-radius: 4px;
 }
+
 .link-style:hover {
   color: #864586 !important;
   border-bottom: 1px solid #864586;
