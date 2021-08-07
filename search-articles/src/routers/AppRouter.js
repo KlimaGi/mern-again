@@ -119,24 +119,27 @@ class AppRouter extends React.Component {
   // send title to mongoDB
   sendTitleToDB(title, url) {
     //front title arr
-    let tempTitlearr = this.state.articleTitlesFromMongo;
-    tempTitlearr.push(title);
+    let tempTitleArr = this.state.articleTitlesFromMongo;
+    tempTitleArr.push(title);
     this.setState({
-      articleTitlesFromMongo: tempTitlearr,
+      articleTitlesFromMongo: tempTitleArr,
     });
 
+    // send title to mongoDB
     const articleTitle = {
       article: title,
       count: 1,
       url: url,
+      note: "",
     };
+    const tempObj = this.state.titlesForTable.push(articleTitle);
+    this.setState({
+      titlesForTable: tempObj,
+    });
 
-    // send title to mongoDB
     axios
       .post("http://localhost:5000/articles/add", articleTitle)
-      .then((res) => console.log(res.data));
-
-    console.log(" front-title", title);
+      .then((res) => console.log("res.data add titleToDb", res.data));
   }
 
   deleteTitle(id) {
@@ -145,7 +148,7 @@ class AppRouter extends React.Component {
       .delete(`http://localhost:5000/articles/${id}`)
       .then((res) => console.log(res.data));
 
-    console.log(" title id ", id);
+    console.log("title id ", id);
     // delete from front
     const arr = this.state.titlesForTable.filter((obj) => obj._id !== id);
     this.setState({

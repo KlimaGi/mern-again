@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchContext } from "../context/searchContext";
 
-export default class ButtonForTable extends React.Component {
+export default class DeleteButton extends React.Component {
   render() {
     return (
       <SearchContext.Consumer>

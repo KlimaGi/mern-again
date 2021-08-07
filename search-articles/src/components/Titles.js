@@ -3,7 +3,8 @@ import DataTable from "react-data-table-component";
 //import DataTableExtension from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { SearchContext } from "../context/searchContext";
-import ButtonForTable from "./ButtonForTable";
+import DeleteButton from "./DeleteButton";
+import NoteLink from "./NoteLink";
 
 const columns = [
   {
@@ -26,8 +27,12 @@ const columns = [
     ),
   },
   {
+    name: "Note",
+    cell: (row) => <NoteLink id={row._id} />,
+  },
+  {
     name: "Delete",
-    cell: (row) => <ButtonForTable id={row._id} />,
+    cell: (row) => <DeleteButton id={row._id} />,
   },
 ];
 

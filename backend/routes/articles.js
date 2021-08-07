@@ -11,8 +11,9 @@ router.route("/add").post((req, res) => {
   const article = req.body.article;
   const count = req.body.count;
   const url = req.body.url;
+  const note = req.body.note;
 
-  const newArticle = new Article({ article, count, url });
+  const newArticle = new Article({ article, count, url, note });
 
   newArticle
     .save()
@@ -37,6 +38,8 @@ router.route("/update/:id").post((req, res) => {
     .then((article) => {
       article.article = req.body.article;
       article.count = Number(req.body.count);
+      article.url = req.body.url;
+      article.note = req.body.note;
 
       article
         .save()

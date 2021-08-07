@@ -9,7 +9,6 @@ const articleSchema = new Schema(
       required: true,
       unique: true,
     },
-
     count: {
       type: Number,
       required: true,
@@ -18,6 +17,9 @@ const articleSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+    },
+    note: {
+      type: String,
     },
   },
   {
