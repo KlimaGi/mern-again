@@ -8,6 +8,7 @@ import Titles from "../components/Titles";
 import Note from "../components/Note";
 import NotFound from "../components/NotFound";
 import { SearchContext } from "../context/searchContext";
+import { ArticleNoteContext } from "../context/articleNoteContext";
 import moment from "moment";
 require("dotenv").config();
 
@@ -20,11 +21,14 @@ class AppRouter extends React.Component {
       searchWordsFromDB: [],
       articleTitlesFromMongo: [],
       titlesForTable: [],
+      articleInfo: [],
     };
 
     this.handleSearch = this.handleSearch.bind(this);
     this.sendTitleToDB = this.sendTitleToDB.bind(this);
     this.deleteTitle = this.deleteTitle.bind(this);
+    this.forNote = this.forNote.bind(this);
+    this.addNote = this.addNote.bind(this);
   }
 
   componentDidMount() {
@@ -156,6 +160,32 @@ class AppRouter extends React.Component {
     });
   }
 
+  forNote(id) {
+    const articleInfo = this.state.titlesForTable.filter(
+      (obj) => obj._id === id
+    );
+
+    this.setState({
+      articleInfo: articleInfo[0],
+    });
+    console.log("forNote id ", id);
+    console.log("articleInfo", articleInfo);
+    console.log("[0] ", articleInfo[0]);
+  }
+
+  addNote(id, note) {
+    // update
+    const updateArticle = {
+      article: this.state.articleInfo.article,
+      count: 1,
+      url: this.state.articleInfo.url,
+      note: note,
+    };
+    axios
+      .post(`http://localhost:5000/articles/update/${id}`, updateArticle)
+      .then((res) => console.log(res.data));
+  }
+
   render() {
     const searchContextValue = {
       handleSearch: this.handleSearch,
@@ -167,14 +197,22 @@ class AppRouter extends React.Component {
       deleteTitle: this.deleteTitle,
     };
 
+    const articleNoteContext = {
+      forNote: this.forNote,
+      articleInfo: this.state.articleInfo,
+      addNote: this.addNote,
+    };
+
     return (
       <BrowserRouter>
         <SearchContext.Provider value={searchContextValue}>
           <Header />
           <Switch>
             <Route path="/" component={Articles} exact={true} />
-            <Route path="/titles" component={Titles} />
-            <Route path="/note" component={Note} />
+            <ArticleNoteContext.Provider value={articleNoteContext}>
+              <Route path="/titles" component={Titles} />
+              <Route path="/note" component={Note} />
+            </ArticleNoteContext.Provider>
             <Route component={NotFound} />
           </Switch>
         </SearchContext.Provider>

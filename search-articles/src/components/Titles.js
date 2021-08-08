@@ -18,6 +18,11 @@ const columns = [
     sortable: true,
   },
   {
+    name: "Notes",
+    selector: "note",
+    sortable: true,
+  },
+  {
     name: "Link",
     selector: "url",
     cell: (row) => (
