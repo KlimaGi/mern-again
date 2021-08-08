@@ -11,6 +11,7 @@ const columns = [
     name: "Title",
     selector: "article",
     sortable: true,
+    grow: 4,
   },
   {
     name: "Number of visits",
@@ -26,7 +27,7 @@ const columns = [
     name: "Link",
     selector: "url",
     cell: (row) => (
-      <a href={row.url} target="_blank">
+      <a className="btn btn-outline-secondary" href={row.url} target="_blank">
         Read it
       </a>
     ),
@@ -41,6 +42,26 @@ const columns = [
   },
 ];
 
+const customStyles = {
+  rows: {
+    style: {
+      minHeight: "72px", // override the row height
+    },
+  },
+  headCells: {
+    style: {
+      paddingLeft: "6px", // override the cell padding for head cells
+      paddingRight: "6px",
+    },
+  },
+  cells: {
+    style: {
+      paddingLeft: "6px", // override the cell padding for data cells
+      paddingRight: "6px",
+    },
+  },
+};
+
 export default class Titles extends React.Component {
   render() {
     return (
@@ -54,6 +75,7 @@ export default class Titles extends React.Component {
                 data={titlesForTable}
                 defaultSortField="article"
                 pagination
+                customStyles={customStyles}
               />
             </div>
           </div>

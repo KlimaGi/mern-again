@@ -8,7 +8,7 @@ export default class NoteLink extends React.Component {
       <ArticleNoteContext.Consumer>
         {({ forNote }) => (
           <div>
-            <Link to="/note">
+            <Link className="link-style" to="/note">
               <div
                 onClick={() => forNote(this.props.id)}
                 className="d-flex justify-content-center align-items-center p-2 btn btn-outline-secondary"
