@@ -22,12 +22,16 @@ export default class Header extends React.Component {
   render() {
     return (
       <SearchContext.Consumer>
-        {({ handleSearch, searchWordsFromDB }) => (
+        {({ handleSearch, searchWordsFromDB, showSearch, hideSearch }) => (
           <div className="container-fluid g-0 bg-secondary">
             <div className="d-flex align-items-end flex-wrap justify-content-start  back-color-style px-5 bt-3 pb-4">
-              <div className="mx-5 ">
-                <h2 className=" m-0">
-                  <Link className="link-logo-name text-white" to="/">
+              <div className="mx-5">
+                <h2 className="m-0 pt-5">
+                  <Link
+                    className="link-logo-name text-white"
+                    to="/"
+                    onClick={() => hideSearch(true)}
+                  >
                     Articles from GNews
                   </Link>
                 </h2>
@@ -36,56 +40,60 @@ export default class Header extends React.Component {
                 <Link
                   className="text-white m-0 px-2 py-1 link-style"
                   to="/titles"
+                  onClick={() => hideSearch(false)}
                 >
                   Titles
                 </Link>
               </div>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSearch(
-                    this.state.searchWord,
-                    this.state.language,
-                    this.state.from,
-                    this.state.to
-                  );
-                }}
-              >
-                <div className="d-flex align-items-end flex-wrap justify-content-center">
-                  <div className="m-1 ">
-                    <Search
-                      onSendWord={(inputWord) =>
-                        this.setState({ searchWord: inputWord })
-                      }
-                      value={this.state.searchWord}
-                      searchWordsFromDB={searchWordsFromDB}
-                    />
-                  </div>
-                  <div className="m-1">
-                    <Language
-                      onClickLanguage={(lang) => {
-                        this.setState({ language: lang });
-                      }}
-                    />
-                  </div>
 
-                  <div className="px-2 m-1">
-                    <Time
-                      onSetTime={(from, to) => {
-                        this.setState({ from, to });
-                      }}
-                    />
+              {showSearch && (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSearch(
+                      this.state.searchWord,
+                      this.state.language,
+                      this.state.from,
+                      this.state.to
+                    );
+                  }}
+                >
+                  <div className="d-flex align-items-end flex-wrap justify-content-center">
+                    <div className="m-1 ">
+                      <Search
+                        onSendWord={(inputWord) =>
+                          this.setState({ searchWord: inputWord })
+                        }
+                        value={this.state.searchWord}
+                        searchWordsFromDB={searchWordsFromDB}
+                      />
+                    </div>
+                    <div className="m-1">
+                      <Language
+                        onClickLanguage={(lang) => {
+                          this.setState({ language: lang });
+                        }}
+                      />
+                    </div>
+
+                    <div className="px-2 m-1">
+                      <Time
+                        onSetTime={(from, to) => {
+                          this.setState({ from, to });
+                        }}
+                      />
+                    </div>
+                    <div className="m-1">
+                      <button
+                        type="submit"
+                        className="btn btn-outline-light d-inline button-style"
+                      >
+                        <i className="fa fa-search"></i>
+                      </button>
+                    </div>
                   </div>
-                  <div className="m-1">
-                    <button
-                      type="submit"
-                      className="btn btn-outline-light d-inline button-style"
-                    >
-                      <i className="fa fa-search"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
+                </form>
+              )}
             </div>
           </div>
         )}

@@ -22,6 +22,7 @@ class AppRouter extends React.Component {
       articleTitlesFromMongo: [],
       titlesForTable: [],
       articleInfo: [],
+      showSearch: true,
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -29,6 +30,7 @@ class AppRouter extends React.Component {
     this.deleteTitle = this.deleteTitle.bind(this);
     this.forNote = this.forNote.bind(this);
     this.addNote = this.addNote.bind(this);
+    this.hideSearch = this.hideSearch.bind(this);
   }
 
   componentDidMount() {
@@ -198,7 +200,9 @@ class AppRouter extends React.Component {
       titlesForTable: temp,
     });
   }
-
+  hideSearch(hide) {
+    this.setState({ showSearch: hide });
+  }
   render() {
     const searchContextValue = {
       handleSearch: this.handleSearch,
@@ -208,12 +212,15 @@ class AppRouter extends React.Component {
       sendTitleToDB: this.sendTitleToDB,
       titlesForTable: this.state.titlesForTable,
       deleteTitle: this.deleteTitle,
+      showSearch: this.state.showSearch,
+      hideSearch: this.hideSearch,
     };
 
     const articleNoteContext = {
       forNote: this.forNote,
       articleInfo: this.state.articleInfo,
       addNote: this.addNote,
+      hideSearch: this.hideSearch,
     };
 
     return (

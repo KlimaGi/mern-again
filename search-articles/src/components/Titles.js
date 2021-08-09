@@ -24,7 +24,7 @@ const columns = [
     selector: "note",
     sortable: true,
     wrap: true,
-    grow: 2,
+    grow: 3,
   },
   {
     name: "Link",
@@ -49,8 +49,6 @@ const customStyles = {
   rows: {
     style: {
       minHeight: "72px",
-      textOverflow: "ellipsis",
-      overflow: "hidden",
     },
   },
   headCells: {
