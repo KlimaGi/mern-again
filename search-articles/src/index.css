@@ -169,4 +169,16 @@ body {
 textarea {
   height: 26rem;
 }
+
+/* ****  searchForTable ***** */
+.parent-box {
+  position: relative;
+}
+.search-box-in-table {
+  position: absolute;
+  z-index: 1;
+  right: 5rem;
+  top: 2.7rem;
+}
+
 /*# sourceMappingURL=App.css.map */

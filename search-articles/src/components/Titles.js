@@ -5,6 +5,7 @@ import "react-data-table-component-extensions/dist/index.css";
 import { SearchContext } from "../context/searchContext";
 import DeleteButton from "./DeleteButton";
 import NoteLink from "./NoteLink";
+import SearchForTable from "./SearchForTable";
 
 const columns = [
   {
@@ -74,20 +75,52 @@ const customStyles = {
 };
 
 export default class Titles extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataForTable: [],
+    };
+    //this.whichData = this.whichData.bind(this);
+  }
+
+  // whichData(data, titlesForTable) {
+  //   const result = data.length > 0 ? data : titlesForTable;
+  //   console.log("data ", data);
+  //   console.log("titlesForTable ", titlesForTable);
+  //   this.setState({ dataForTable: result });
+  // }
+
   render() {
     return (
       <SearchContext.Consumer>
         {({ titlesForTable }) => (
-          <div className="title-table container-fluid g-0">
-            <div className="card p-3">
-              <DataTable
-                title="Visited articles titles"
-                columns={columns}
-                data={titlesForTable}
-                defaultSortField="article"
-                pagination
-                customStyles={customStyles}
+          <div className="title-table container-fluid g-0 .parent-box">
+            <div className="search-box-in-table">
+              <SearchForTable
+                forSort={titlesForTable}
+                filteredData={(data) => this.setState({ dataForTable: data })}
               />
+            </div>
+            <div className="card p-3">
+              {this.state.dataForTable.length === 0 ? (
+                <DataTable
+                  title="Visited articles titles"
+                  columns={columns}
+                  data={titlesForTable}
+                  defaultSortField="article"
+                  pagination
+                  customStyles={customStyles}
+                />
+              ) : (
+                <DataTable
+                  title="Visited articles titles"
+                  columns={columns}
+                  data={this.state.dataForTable}
+                  defaultSortField="article"
+                  pagination
+                  customStyles={customStyles}
+                />
+              )}
             </div>
           </div>
         )}

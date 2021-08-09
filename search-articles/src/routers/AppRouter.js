@@ -54,10 +54,6 @@ class AppRouter extends React.Component {
         const tempArr = [];
         response.data.map((object) => tempArr.push(object.word));
         this.setState({ searchWordsFromDB: tempArr });
-        // console.log(
-        //   "approuter-searchWordsFromDB",
-        //   this.state.searchWordsFromDB
-        // );
       })
       .catch((err) => {
         console.log(err);
@@ -72,12 +68,6 @@ class AppRouter extends React.Component {
           articleTitlesFromMongo: arrTitles,
           titlesForTable: response.data,
         });
-
-        console.log(
-          "approuter-articleTitlesFromMongo",
-          this.state.articleTitlesFromMongo
-        );
-        console.log("titlesForTable", this.state.titlesForTable);
       }
     });
   }
@@ -86,7 +76,6 @@ class AppRouter extends React.Component {
     this.setState({
       searchword: searchword,
     });
-    //console.log("searchword from handleSearch", searchword);
 
     // send search word to mongoDB
     const word = {
@@ -103,7 +92,6 @@ class AppRouter extends React.Component {
     this.setState({
       searchWordsFromDB: temparr,
     });
-    //console.log("adding front", this.state.searchWordsFromDB);
 
     // get gNews articles by searchword
 
@@ -117,9 +105,7 @@ class AppRouter extends React.Component {
       })
       .then((data) => {
         this.setState({ articlesFromGNews: data.articles });
-        //console.log(this.state.articlesFromGNews);
       });
-    //console.log(this.state.articlesFromGNews);
   }
 
   // send title to mongoDB
@@ -154,7 +140,6 @@ class AppRouter extends React.Component {
       .delete(`http://localhost:5000/articles/${id}`)
       .then((res) => console.log(res.data));
 
-    console.log("title id ", id);
     // delete from front
     const arr = this.state.titlesForTable.filter((obj) => obj._id !== id);
     this.setState({
@@ -170,9 +155,6 @@ class AppRouter extends React.Component {
     this.setState({
       articleInfo: articleInfo[0],
     });
-    console.log("forNote id ", id);
-    console.log("articleInfo", articleInfo);
-    console.log("[0] ", articleInfo[0]);
   }
 
   addNote(id, note) {
@@ -194,7 +176,6 @@ class AppRouter extends React.Component {
       }
       return el;
     });
-    console.log("temp ", temp);
 
     this.setState({
       titlesForTable: temp,
