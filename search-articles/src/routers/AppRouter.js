@@ -184,6 +184,19 @@ class AppRouter extends React.Component {
     axios
       .post(`http://localhost:5000/articles/update/${id}`, updateArticle)
       .then((res) => console.log(res.data));
+
+    //add new note to table
+    const temp = this.state.titlesForTable.map((el) => {
+      if (el._id === id) {
+        el.note = note;
+      }
+      return el;
+    });
+    console.log("temp ", temp);
+
+    this.setState({
+      titlesForTable: temp,
+    });
   }
 
   render() {

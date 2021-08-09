@@ -11,7 +11,8 @@ const columns = [
     name: "Title",
     selector: "article",
     sortable: true,
-    grow: 4,
+    wrap: true,
+    grow: 3,
   },
   {
     name: "Number of visits",
@@ -22,6 +23,7 @@ const columns = [
     name: "Notes",
     selector: "note",
     sortable: true,
+    wrap: true,
   },
   {
     name: "Link",

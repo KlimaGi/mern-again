@@ -1,5 +1,6 @@
 import React from "react";
 import { ArticleNoteContext } from "../context/articleNoteContext";
+import AreaText from "./AreaText";
 
 export default class Note extends React.Component {
   constructor(props) {
@@ -7,13 +8,6 @@ export default class Note extends React.Component {
     this.state = {
       areaText: "",
     };
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({
-      areaText: event.target.value,
-    });
   }
 
   render() {
@@ -25,13 +19,12 @@ export default class Note extends React.Component {
               <p>{articleInfo.article}</p>
             </div>
             <div className="form-group m-3 container-fluid note-box">
-              <textarea
-                className="form-control p-3 m-1 "
-                aria-label="With textarea"
-                placeholder="Your note ..."
-                onChange={this.handleChange}
-                value={this.state.areaText}
-              ></textarea>
+              <AreaText
+                text={articleInfo.note}
+                sendToParent={(inputWord) =>
+                  this.setState({ areaText: inputWord })
+                }
+              />
               <button
                 onClick={() => addNote(articleInfo._id, this.state.areaText)}
                 className="form-control p-2 m-1 btn btn-outline-secondary"
