@@ -13,6 +13,9 @@ export default class AreaText extends React.Component {
     this.setState({ areaText: e.target.value });
     this.props.sendToParent(e.target.value);
   }
+  componentDidMount() {
+    this.props.sendToParent(this.state.areaText);
+  }
 
   render() {
     return (

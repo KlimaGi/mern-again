@@ -24,6 +24,7 @@ const columns = [
     selector: "note",
     sortable: true,
     wrap: true,
+    grow: 2,
   },
   {
     name: "Link",
@@ -47,18 +48,20 @@ const columns = [
 const customStyles = {
   rows: {
     style: {
-      minHeight: "72px", // override the row height
+      minHeight: "72px",
+      textOverflow: "ellipsis",
+      overflow: "hidden",
     },
   },
   headCells: {
     style: {
-      paddingLeft: "6px", // override the cell padding for head cells
+      paddingLeft: "6px",
       paddingRight: "6px",
     },
   },
   cells: {
     style: {
-      paddingLeft: "6px", // override the cell padding for data cells
+      paddingLeft: "6px",
       paddingRight: "6px",
     },
   },

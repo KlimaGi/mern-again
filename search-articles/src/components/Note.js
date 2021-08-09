@@ -8,8 +8,13 @@ export default class Note extends React.Component {
     this.state = {
       areaText: "",
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick(addNote, id, text) {
+    addNote(id, text);
+    window.location = "/titles";
+  }
   render() {
     return (
       <ArticleNoteContext.Consumer>
@@ -26,7 +31,13 @@ export default class Note extends React.Component {
                 }
               />
               <button
-                onClick={() => addNote(articleInfo._id, this.state.areaText)}
+                onClick={() =>
+                  this.handleClick(
+                    addNote,
+                    articleInfo._id,
+                    this.state.areaText
+                  )
+                }
                 className="form-control p-2 m-1 btn btn-outline-secondary"
               >
                 Submit
