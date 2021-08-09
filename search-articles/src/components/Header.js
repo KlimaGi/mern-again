@@ -25,7 +25,7 @@ export default class Header extends React.Component {
         {({ handleSearch, searchWordsFromDB, showSearch, hideSearch }) => (
           <div className="container-fluid g-0 bg-secondary">
             <div className="d-flex align-items-end flex-wrap justify-content-start  back-color-style px-5 bt-3 pb-4">
-              <div className="mx-5">
+              <div className="mx-4 ">
                 <h2 className="m-0 pt-5">
                   <Link
                     className="link-logo-name text-white"

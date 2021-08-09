@@ -15,7 +15,7 @@ const columns = [
     grow: 3,
   },
   {
-    name: "Number of visits",
+    name: "Visits",
     selector: "count",
     sortable: true,
   },
@@ -46,21 +46,29 @@ const columns = [
 ];
 
 const customStyles = {
+  header: {
+    style: {
+      paddingLeft: "3rem",
+    },
+  },
   rows: {
     style: {
       minHeight: "72px",
+      paddingLeft: "2rem",
     },
   },
   headCells: {
     style: {
-      paddingLeft: "6px",
+      paddingLeft: "3rem",
       paddingRight: "6px",
+      fontSize: "1rem",
     },
   },
   cells: {
     style: {
-      paddingLeft: "6px",
+      paddingLeft: "1rem",
       paddingRight: "6px",
+      fontSize: "1rem",
     },
   },
 };
@@ -70,8 +78,8 @@ export default class Titles extends React.Component {
     return (
       <SearchContext.Consumer>
         {({ titlesForTable }) => (
-          <div className="title-table container-fluid">
-            <div className="card">
+          <div className="title-table container-fluid g-0">
+            <div className="card p-3">
               <DataTable
                 title="Visited articles titles"
                 columns={columns}
