@@ -80,15 +80,7 @@ export default class Titles extends React.Component {
     this.state = {
       dataForTable: [],
     };
-    //this.whichData = this.whichData.bind(this);
   }
-
-  // whichData(data, titlesForTable) {
-  //   const result = data.length > 0 ? data : titlesForTable;
-  //   console.log("data ", data);
-  //   console.log("titlesForTable ", titlesForTable);
-  //   this.setState({ dataForTable: result });
-  // }
 
   render() {
     return (

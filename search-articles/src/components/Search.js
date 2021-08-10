@@ -63,7 +63,7 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div className="" onClick={this.handleBlur}>
+      <div className="parent-box" onClick={this.handleBlur}>
         <div className="error-box error">
           {this.state.error && (
             <p className="error text-danger pb-1 m-0">
